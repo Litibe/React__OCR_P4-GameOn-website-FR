@@ -228,12 +228,33 @@ input {
 .formData[data-error-visible="true"] .text-control {
   border: 2px solid #e54858;
 }
-/* 
+@keyframes animationTranslateError {
+  0% {
+    transform: translateX(0px);
+  }
+  25% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.bg-error {
+  border: 1px #e54858 solid;
+  background-color: rgba(229, 72, 88, 0.4);
+  color: white;
+  animation: 150ms ease-in-out 4 animationTranslateError;
+}
+
 input[data-error]::after {
-    content: attr(data-error);
-    font-size: 0.4em;
-    color: red;
-} */
+  content: attr(data-error);
+  font-size: 0.4em;
+  color: red;
+}
 .checkbox-label,
 .checkbox2-label {
   position: relative;
@@ -348,6 +369,10 @@ input[data-error]::after {
   color: #fff;
   cursor: pointer;
   border: 0;
+}
+.btn-submit:disabled {
+  background: gray;
+  cursor: not-allowed;
 }
 /* custom select styles */
 .custom-select {
