@@ -249,6 +249,11 @@ input {
   color: white;
   animation: 150ms ease-in-out 4 animationTranslateError;
 }
+.bg-checked {
+  background-color: rgb(233, 245, 216);
+  color: green;
+  transition: all ease-in-out 300ms;
+}
 
 input[data-error]::after {
   content: attr(data-error);

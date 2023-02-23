@@ -35,10 +35,14 @@ function exitModal() {
 }
 
 // Control Form
+const controlForm = new Map();
+
 let inputLastName = document.getElementById("last")
 let inputFirstName = document.getElementById("first")
 let inputEmail = document.getElementById("email")
 let inputDate = document.getElementById("birthdate")
+let inputNumberRound = document.getElementById("quantity")
+
 inputLastName.addEventListener("change", function () {
   checkInputText(this);
 },)
@@ -51,33 +55,29 @@ inputEmail.addEventListener("change", function () {
 inputDate.addEventListener("change", function () {
   checkDateBirthAdult(this);
 },)
-
+inputNumberRound.addEventListener("change", function () {
+  console.log(this);
+},)
 
 function checkInputText(element){
-  console.log(element.previousElementSibling.innerText, "change")
-
   if (element.value.length < 2 ){
-    element.classList.add("bg-error")
-    element.parentElement.setAttribute("data-error-visible", "true")
-    element.parentElement.setAttribute("data-error", "Veuillez entrer 2 caractères ou plus pour le champ " + element.previousElementSibling.innerText)
-
+    dataError(element)
+    element.parentElement.setAttribute(
+      "data-error", "Veuillez entrer 2 caractères ou plus pour le champ " + element.previousElementSibling.innerText)
   } else if (!/^[a-zéèçà]{2,50}(-| )?([a-zéèçà]{2,50})?$/i.test(element.value)) {
-    element.classList.add("bg-error")
-    element.parentElement.setAttribute("data-error-visible", "true")
-    element.parentElement.setAttribute("data-error", "Veuillez entrer uniquement du texte pour ce champ.")
-
+    dataError(element)
+   element.parentElement.setAttribute("data-error", "Veuillez entrer uniquement du texte pour ce champ.")
   }else {
-    element.parentElement.setAttribute("data-error-visible", "false")
-    element.classList.remove("bg-error")
+    dataChecked(element)
   }
 }
+
 function checkValueEmail(element) {
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(element.value)) {
-    element.parentElement.setAttribute("data-error-visible", "true")
-    element.classList.add("bg-error")
+    dataError(element)
+    element.parentElement.setAttribute("data-error", "Vous devez saisir une adresse mail valide.")
   } else {
-    element.parentElement.setAttribute("data-error-visible", "false")
-    element.classList.remove("bg-error")
+    dataChecked(element)
   }
 }
 
@@ -89,16 +89,51 @@ function checkDateBirthAdult(element) {
   maxDateAdult.setYear(today.getFullYear() - 90);
   let controlDateInput = new Date(element.value).getTime()
   let DateMinAdult = new Date(minDateAdult).getTime()
+
   if (controlDateInput >= DateMinAdult){
-    element.parentElement.setAttribute("data-error-visible", "true")
-    element.parentElement.setAttribute("data-error", "Vous devez entrer votre date de naissance & être Majeur selon les conditions d'utilisation.")
-    element.classList.add("bg-error")
+    element.parentElement.setAttribute(
+      "data-error", "Vous devez entrer votre date de naissance & être Majeur selon les conditions d'utilisation.")
+    dataError(element)
   } else if (controlDateInput <= maxDateAdult){
-    element.parentElement.setAttribute("data-error-visible", "true")
-    element.parentElement.setAttribute("data-error", "Vous devez avoir moins de 90ans pour vous inscrire selon les conditions d'utilisation.")
-    element.classList.add("bg-error")
-  }else {
-    element.parentElement.setAttribute("data-error-visible", "false")
-    element.classList.remove("bg-error")
+    element.parentElement.setAttribute(
+      "data-error", "Vous devez avoir moins de 90ans pour vous inscrire selon les conditions d'utilisation.")
+    dataError(element)
+  } else {
+    dataChecked(element)
   }
 }
+
+function dataChecked(element){
+  element.classList.remove("bg-error")
+  element.classList.add("bg-checked")
+  element.parentElement.removeAttribute("data-error-visible"),
+  element.parentElement.removeAttribute("data-error")
+  controlForm.set(element.previousElementSibling.innerText, element.value)
+}
+
+function dataError(element){
+  element.parentElement.setAttribute("data-error-visible", "true")
+  element.classList.add("bg-error")
+  element.classList.remove("bg-checked")
+  controlForm.delete(element.previousElementSibling.innerText)
+}
+
+function checkBox(element){
+  if (element.checked){
+  controlForm.set(element.name, element.value)} else {
+    controlForm.delete(element.name)}
+}
+
+function checkForm(element){
+  console.log(controlForm)
+  if (controlForm.size <1 ){
+  element.parentElement.setAttribute("data-error-visible", "true")
+  element.parentElement.setAttribute(
+    "data-error", "Vous devez remplir tous les éléments : reste " + (7 - controlForm.size) + " à remplir !")
+  } else{
+    element.parentElement.removeAttribute("data-error-visible"),
+    element.parentElement.removeAttribute("data-error")
+    element.removeAttribute("disabled")
+  }
+}
+controlForm.addEventListener("change", function() {checkForm()})

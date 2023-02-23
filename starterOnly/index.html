@@ -58,7 +58,8 @@
           <form name="reserve" action="index.html" method="get" onsubmit="return validate();">
             <div class="formData">
               <label>Prénom</label>
-              <input class="text-control" type="text" id="first" name="first" autocomplete="on" autofocus required />
+              <input class="text-control" type="text" id="first" name="first" autocomplete="on" autofocus required
+                onchange="checkInputText(this)" />
             </div>
             <div class="formData">
               <label>Nom</label>
@@ -105,21 +106,23 @@
             </div>
 
             <div class="formData">
-              <input class="checkbox-input" type="checkbox" id="checkbox1" checked />
-              <label class="checkbox2-label" for="checkbox1" required>
+              <input class="checkbox-input" type="checkbox" id="checkbox1" name="contract" onchange="checkBox(this)" />
+              <label class="checkbox2-label" for="checkbox1">
                 <span class="checkbox-icon"></span>
                 J'ai lu et accepté les conditions d'utilisation.
               </label>
             </div>
             <div class="formData">
-              <input class="checkbox-input" type="checkbox" id="checkbox2" />
+              <input class="checkbox-input" type="checkbox" id="checkbox2" name="events" />
               <label class="checkbox2-label" for="checkbox2">
                 <span class="checkbox-icon"></span>
                 Je souhaite être prévenu des prochains évènements.
               </label>
             </div>
         </div>
-        <input class="btn-submit" type="submit" disabled value="C'est parti" />
+        <div class="formData">
+          <input class="btn-submit" type="submit" value="C'est parti" disabled onmouseover="checkForm(this)" />
+        </div>
         </form>
       </div>
     </div>
