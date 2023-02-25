@@ -14,7 +14,6 @@ const formData = document.querySelectorAll(".formData");
 const modalBtnSubmit = document.querySelectorAll(".close");
 const modalContent = document.getElementsByClassName("content")[0];
 
-
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -24,60 +23,70 @@ function launchModal() {
 }
 
 // exit modal form
-modalBtnSubmit.forEach((btn) => btn.addEventListener("click", exitModal))
+modalBtnSubmit.forEach((btn) => btn.addEventListener("click", exitModal));
 function exitModal() {
   modalContent.style.animationName = "modalclose";
-  setTimeout(function() {
+  setTimeout(function () {
     modalbg.style.display = "none";
     modalContent.style.animationName = "modalopen";
   }, 500);
-  
 }
 
 // Control Form
 const controlForm = new Map();
 
-let inputLastName = document.getElementById("last")
-let inputFirstName = document.getElementById("first")
-let inputEmail = document.getElementById("email")
-let inputDate = document.getElementById("birthdate")
-let inputNumberRound = document.getElementById("quantity")
+let inputLastName = document.getElementById("last");
+let inputFirstName = document.getElementById("first");
+let inputEmail = document.getElementById("email");
+let inputDate = document.getElementById("birthdate");
+let inputNumberRound = document.getElementById("quantity");
 
 inputLastName.addEventListener("change", function () {
   checkInputText(this);
-},)
+});
 inputFirstName.addEventListener("change", function () {
   checkInputText(this);
-},)
+});
 inputEmail.addEventListener("change", function () {
   checkValueEmail(this);
-},)
+});
 inputDate.addEventListener("change", function () {
   checkDateBirthAdult(this);
-},)
+});
 inputNumberRound.addEventListener("change", function () {
-  console.log(this);
-},)
+  checkdataRange(this);
+});
 
-function checkInputText(element){
-  if (element.value.length < 2 ){
-    dataError(element)
+function checkInputText(element) {
+  if (element.value.length < 2) {
+    dataError(element);
     element.parentElement.setAttribute(
-      "data-error", "Veuillez entrer 2 caractères ou plus pour le champ " + element.previousElementSibling.innerText)
-  } else if (!/^[a-zéèçà]{2,50}(-| )?([a-zéèçà]{2,50})?$/i.test(element.value)) {
-    dataError(element)
-   element.parentElement.setAttribute("data-error", "Veuillez entrer uniquement du texte pour ce champ.")
-  }else {
-    dataChecked(element)
+      "data-error",
+      "Veuillez entrer 2 caractères ou plus pour le champ " +
+        element.previousElementSibling.innerText
+    );
+  } else if (
+    !/^[a-zéèçà]{2,50}(-| )?([a-zéèçà]{2,50})?$/i.test(element.value)
+  ) {
+    dataError(element);
+    element.parentElement.setAttribute(
+      "data-error",
+      "Veuillez entrer uniquement du texte pour ce champ."
+    );
+  } else {
+    dataChecked(element);
   }
 }
 
 function checkValueEmail(element) {
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(element.value)) {
-    dataError(element)
-    element.parentElement.setAttribute("data-error", "Vous devez saisir une adresse mail valide.")
+    dataError(element);
+    element.parentElement.setAttribute(
+      "data-error",
+      "Vous devez saisir une adresse mail valide."
+    );
   } else {
-    dataChecked(element)
+    dataChecked(element);
   }
 }
 
@@ -87,53 +96,143 @@ function checkDateBirthAdult(element) {
   minDateAdult.setYear(today.getFullYear() - 18);
   let maxDateAdult = new Date();
   maxDateAdult.setYear(today.getFullYear() - 90);
-  let controlDateInput = new Date(element.value).getTime()
-  let DateMinAdult = new Date(minDateAdult).getTime()
-
-  if (controlDateInput >= DateMinAdult){
-    element.parentElement.setAttribute(
-      "data-error", "Vous devez entrer votre date de naissance & être Majeur selon les conditions d'utilisation.")
-    dataError(element)
-  } else if (controlDateInput <= maxDateAdult){
-    element.parentElement.setAttribute(
-      "data-error", "Vous devez avoir moins de 90ans pour vous inscrire selon les conditions d'utilisation.")
-    dataError(element)
+  let controlDateInput = new Date(element.value).getTime();
+  let DateMinAdult = new Date(minDateAdult).getTime();
+  if (element.value !== "") {
+    console.log(element);
+    if (controlDateInput >= DateMinAdult) {
+      element.parentElement.setAttribute(
+        "data-error",
+        "Vous devez entrer votre date de naissance & être Majeur selon les conditions d'utilisation."
+      );
+      dataError(element);
+    } else if (controlDateInput <= maxDateAdult) {
+      element.parentElement.setAttribute(
+        "data-error",
+        "Vous devez avoir moins de 90ans pour vous inscrire selon les conditions d'utilisation."
+      );
+      dataError(element);
+    } else {
+      dataChecked(element);
+    }
   } else {
-    dataChecked(element)
+    element.parentElement.setAttribute(
+      "data-error",
+      "Vous devez entrer votre date de naissance"
+    );
+
+    dataError(element);
   }
 }
 
-function dataChecked(element){
-  element.classList.remove("bg-error")
-  element.classList.add("bg-checked")
-  element.parentElement.removeAttribute("data-error-visible"),
-  element.parentElement.removeAttribute("data-error")
-  controlForm.set(element.previousElementSibling.innerText, element.value)
+function checkdataRange(element) {
+  if (element.value < "0" || !/\d$/i.test(element.value)) {
+    element.parentElement.setAttribute(
+      "data-error",
+      "Vous devez saisir un chiffre"
+    );
+    dataError(element);
+  } else {
+    dataChecked(element);
+    controlForm.set(element.previousElementSibling.innerText, element.value);
+  }
 }
 
-function dataError(element){
-  element.parentElement.setAttribute("data-error-visible", "true")
-  element.classList.add("bg-error")
-  element.classList.remove("bg-checked")
-  controlForm.delete(element.previousElementSibling.innerText)
+function dataChecked(element) {
+  element.classList.remove("bg-error");
+  element.classList.add("bg-checked");
+  element.parentElement.removeAttribute("data-error-visible");
+  element.parentElement.removeAttribute("data-error");
+  controlForm.set(element.previousElementSibling.innerText, element.value);
 }
 
-function checkBox(element){
-  if (element.checked){
-  controlForm.set(element.name, element.value)} else {
-    controlForm.delete(element.name)}
+function dataError(element) {
+  element.parentElement.setAttribute("data-error-visible", "true");
+  element.classList.add("bg-error");
+  element.classList.remove("bg-checked");
+  controlForm.delete(element.previousElementSibling.innerText);
 }
 
-function checkForm(element){
-  console.log(controlForm)
-  if (controlForm.size <1 ){
-  element.parentElement.setAttribute("data-error-visible", "true")
-  element.parentElement.setAttribute(
-    "data-error", "Vous devez remplir tous les éléments : reste " + (7 - controlForm.size) + " à remplir !")
-  } else{
+function checkBoxContract(element) {
+  if (element.checked) {
+    element.parentElement.lastElementChild.classList.remove("bg-error");
+    element.parentElement.removeAttribute("data-error-visible");
+    element.parentElement.removeAttribute("data-error");
+    controlForm.set(element.name, element.value);
+  } else {
+    element.parentElement.lastElementChild.classList.add("bg-error");
+    element.parentElement.setAttribute(
+      "data-error",
+      "Vous devez accepter les conditions d'utilisation."
+    );
+    element.parentElement.setAttribute("data-error-visible", true);
+    controlForm.delete(element.name);
+  }
+}
+
+function checkdataLocation(element) {
+  console.log(element);
+  let divChild = element.childNodes;
+  let detectOneChecked = undefined;
+  for (const child of divChild) {
+    if (child.checked === true) {
+      detectOneChecked = child;
+      element.classList.remove("bg-error");
+      element.removeAttribute("data-error-visible");
+      element.removeAttribute("data-error");
+      controlForm.set(child.name, child.value);
+    }
+  }
+  if (detectOneChecked === undefined) {
+    element.classList.add("bg-error");
+    element.setAttribute("data-error", "Vous devez cocher une ville.");
+    element.setAttribute("data-error-visible", true);
+  }
+}
+
+function checkForm(element) {
+  let formDiv = document.querySelector("form[name='reserve']").childNodes;
+  for (const child of formDiv) {
+    if (child.attributes !== undefined) {
+      if (child.attributes.class.nodeValue === "formData") {
+        if (
+          child.lastElementChild !== undefined &&
+          child.lastElementChild.name !== undefined
+        ) {
+          if (
+            child.lastElementChild.name === "last" ||
+            child.lastElementChild.name === "first"
+          ) {
+            checkInputText(child.lastElementChild);
+          } else if (child.lastElementChild.name === "email") {
+            checkValueEmail(child.lastElementChild);
+          } else if (child.lastElementChild.name === "birthdate") {
+            checkDateBirthAdult(child.lastElementChild);
+          } else if (child.lastElementChild.name === "quantity") {
+            checkdataRange(child.lastElementChild);
+          }
+        } else if (
+          child.firstElementChild !== undefined &&
+          child.firstElementChild.name === "contract"
+        ) {
+          checkBoxContract(child.firstElementChild);
+        } else if (child.firstElementChild.name === "location") {
+          checkdataLocation(child);
+        }
+      }
+    }
+  }
+  if (controlForm.size < 7) {
+    element.parentElement.setAttribute("data-error-visible", "true");
+    element.parentElement.setAttribute(
+      "data-error",
+      "Vous devez remplir tous les éléments : reste " +
+        (7 - controlForm.size) +
+        " à remplir !"
+    );
+  } else {
     element.parentElement.removeAttribute("data-error-visible"),
-    element.parentElement.removeAttribute("data-error")
-    element.removeAttribute("disabled")
+      element.parentElement.removeAttribute("data-error");
+    element.removeAttribute("disabled");
   }
 }
-controlForm.addEventListener("change", function() {checkForm()})
