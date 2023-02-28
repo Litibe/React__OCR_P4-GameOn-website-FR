@@ -59,7 +59,7 @@
       <div class="content">
         <span class="close"></span>
         <div class="modal-body">
-          <form name="reserve" action="index.html" method="get" onsubmit="return validate();">
+          <form name="reserve" action="index.html" method="get">
             <div class="formData">
               <label>Prénom</label>
               <input class="text-control" type="text" id="first" name="first" autocomplete="on" autofocus required
@@ -75,7 +75,7 @@
             </div>
             <div class="formData">
               <label>Date de naissance</label>
-              <input class="text-control" type="date" id="birthdate" name="birthdate" autocomplete="on" required />
+              <input class="text-control" type="date" id="birthdate" name="birthdate" required />
             </div>
             <div class="formData">
               <label>À combien de tournois GameOn avez-vous déjà participé ?</label>
@@ -111,7 +111,7 @@
 
             <div class="formData">
               <input class="checkbox-input" type="checkbox" id="checkbox1" name="contract"
-                onchange="checkBoxContract(this)" />
+                onchange="checkBoxContract(this)" required />
               <label class="checkbox2-label" for="checkbox1">
                 <span class="checkbox-icon"></span>
                 J'ai lu et accepté les conditions d'utilisation.
@@ -126,7 +126,7 @@
             </div>
         </div>
         <div class="formData">
-          <input class="btn-submit" type="submit" value="C'est parti" disabled onmouseover="checkForm(this)" />
+          <input class="btn-submit" type="button" value="C'est parti" onmouseover="checkForm(this)" />
         </div>
         </form>
       </div>
@@ -135,7 +135,7 @@
   </main>
   <footer>
     <p class="copyrights">
-      Copyright 2014 - 2022, GameOn Inc.
+      Copyright 2014 - 2023, GameOn Inc.
     </p>
   </footer>
   <script src="modal.js"></script>

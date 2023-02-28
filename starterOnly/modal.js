@@ -13,7 +13,18 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalBtnSubmit = document.querySelectorAll(".close");
 const modalContent = document.getElementsByClassName("content")[0];
-
+const btnSubmit = document.getElementsByClassName("btn-submit")[0];
+let formDiv = document.querySelector("form[name='reserve']");
+let today = new Date();
+let maxDateAdult = new Date();
+maxDateAdult.setYear(today.getFullYear() - 18);
+let minDateAdult = new Date();
+minDateAdult.setYear(today.getFullYear() - 90);
+let dateMinInput = String(minDateAdult.toISOString().split("T")[0]);
+let dateMaxInput = String(maxDateAdult.toISOString().split("T")[0]);
+let inputBirthday = document.getElementById("birthdate");
+inputBirthday.setAttribute("min", dateMinInput);
+inputBirthday.setAttribute("max", dateMaxInput);
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -75,38 +86,36 @@ function checkInputText(element) {
     );
   } else {
     dataChecked(element);
+    controlForm.set(element.previousElementSibling.innerText, element.value);
   }
 }
 
 function checkValueEmail(element) {
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(element.value)) {
     dataError(element);
+    controlForm.delete(element.name);
     element.parentElement.setAttribute(
       "data-error",
       "Vous devez saisir une adresse mail valide."
     );
   } else {
     dataChecked(element);
+    controlForm.set(element.name, element.value);
   }
 }
 
 function checkDateBirthAdult(element) {
-  let today = new Date();
-  let minDateAdult = new Date();
-  minDateAdult.setYear(today.getFullYear() - 18);
-  let maxDateAdult = new Date();
-  maxDateAdult.setYear(today.getFullYear() - 90);
-  let controlDateInput = new Date(element.value).getTime();
-  let DateMinAdult = new Date(minDateAdult).getTime();
   if (element.value !== "") {
-    console.log(element);
-    if (controlDateInput >= DateMinAdult) {
+    let dateMaxAdult = new Date(maxDateAdult).getTime();
+    let dateMinAdult = new Date(minDateAdult).getTime();
+    let controlDateInput = new Date(element.value).getTime();
+    if (controlDateInput >= dateMaxAdult) {
       element.parentElement.setAttribute(
         "data-error",
         "Vous devez entrer votre date de naissance & être Majeur selon les conditions d'utilisation."
       );
       dataError(element);
-    } else if (controlDateInput <= maxDateAdult) {
+    } else if (controlDateInput < dateMinAdult) {
       element.parentElement.setAttribute(
         "data-error",
         "Vous devez avoir moins de 90ans pour vous inscrire selon les conditions d'utilisation."
@@ -114,13 +123,13 @@ function checkDateBirthAdult(element) {
       dataError(element);
     } else {
       dataChecked(element);
+      controlForm.set(element.previousElementSibling.innerText, element.value);
     }
   } else {
     element.parentElement.setAttribute(
       "data-error",
       "Vous devez entrer votre date de naissance"
     );
-
     dataError(element);
   }
 }
@@ -132,9 +141,10 @@ function checkdataRange(element) {
       "Vous devez saisir un chiffre"
     );
     dataError(element);
+    controlForm.delete(element.name);
   } else {
     dataChecked(element);
-    controlForm.set(element.previousElementSibling.innerText, element.value);
+    controlForm.set(element.name, element.value);
   }
 }
 
@@ -143,7 +153,6 @@ function dataChecked(element) {
   element.classList.add("bg-checked");
   element.parentElement.removeAttribute("data-error-visible");
   element.parentElement.removeAttribute("data-error");
-  controlForm.set(element.previousElementSibling.innerText, element.value);
 }
 
 function dataError(element) {
@@ -171,7 +180,6 @@ function checkBoxContract(element) {
 }
 
 function checkdataLocation(element) {
-  console.log(element);
   let divChild = element.childNodes;
   let detectOneChecked = undefined;
   for (const child of divChild) {
@@ -223,6 +231,7 @@ function checkForm(element) {
     }
   }
   if (controlForm.size < 7) {
+    element.style.background = "gray";
     element.parentElement.setAttribute("data-error-visible", "true");
     element.parentElement.setAttribute(
       "data-error",
@@ -231,8 +240,24 @@ function checkForm(element) {
         " à remplir !"
     );
   } else {
-    element.parentElement.removeAttribute("data-error-visible"),
-      element.parentElement.removeAttribute("data-error");
-    element.removeAttribute("disabled");
+    element.style.background = "red";
+    element.parentElement.removeAttribute("data-error-visible");
+    element.parentElement.removeAttribute("data-error");
+    btnSubmit.setAttribute("type", "submit");
+  }
+  data = "Données envoyées par le formulaire : ";
+  for (const child of controlForm) {
+    data += Object.values(child);
+    data += "##";
   }
 }
+
+formDiv.addEventListener("submit", function (e) {
+  e.preventDefault();
+  btnSubmit.value = "Fermer";
+  btnSubmit.setAttribute("type", "button");
+  btnSubmit.removeAttribute("onmouseover");
+  btnSubmit.addEventListener("click", exitModal);
+  document.documentElement.style.setProperty("--modal-after-display", "flex");
+  alert(data);
+});
