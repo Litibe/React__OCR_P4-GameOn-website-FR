@@ -37,6 +37,10 @@ img {
 .header-logo {
   float: left;
 }
+.header-logo img {
+  min-width: 150px;
+  max-width: 250px;
+}
 .main-navbar {
   float: right;
 }
@@ -45,8 +49,8 @@ img {
   display: block;
   color: #000000;
   text-align: center;
-  padding: 12px 12px;
-  margin: 5px;
+  padding: 12px 6px;
+  margin: 4px;
   text-decoration: none;
   font-size: 20px;
   border-radius: 15px;
@@ -528,7 +532,7 @@ footer {
     min-width: 50%;
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .hero-section {
     display: block;
     box-shadow: unset;
@@ -540,6 +544,11 @@ footer {
   }
   .hero-content h1 {
     font-size: 2rem;
+  }
+  .hero-content p {
+    width: 72%;
+    padding: 0;
+    font-size: 13px;
   }
   .hero-content::after {
     content: unset;
@@ -565,12 +574,11 @@ footer {
     margin: 32px auto 10px;
     padding: 12px 35px;
   }
-  .copyrights {
-    text-align: center;
-  }
 
   .topnav.responsive {
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
   .topnav.responsive .icon {
     position: absolute;
@@ -582,17 +590,7 @@ footer {
     display: block;
     text-align: center;
   }
-}
 
-@media screen and (max-width: 540px) {
-  .hero-content {
-    padding: 0;
-  }
-  .hero-content p {
-    width: 72%;
-    padding: 0;
-    font-size: 13px;
-  }
   .topnav a {
     display: none;
   }
@@ -608,6 +606,7 @@ footer {
   }
   .copyrights {
     margin: 0 auto 30px auto;
+    text-align: center;
   }
 }
 
