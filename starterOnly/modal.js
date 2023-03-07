@@ -15,16 +15,7 @@ const modalBtnSubmit = document.querySelectorAll(".close");
 const modalContent = document.getElementsByClassName("content")[0];
 const btnSubmit = document.getElementsByClassName("btn-submit")[0];
 let formDiv = document.querySelector("form[name='reserve']");
-let today = new Date();
-let maxDateAdult = new Date();
-maxDateAdult.setYear(today.getFullYear() - 18);
-let minDateAdult = new Date();
-minDateAdult.setYear(today.getFullYear() - 90);
-let dateMinInput = String(minDateAdult.toISOString().split("T")[0]);
-let dateMaxInput = String(maxDateAdult.toISOString().split("T")[0]);
-let inputBirthday = document.getElementById("birthdate");
-inputBirthday.setAttribute("min", dateMinInput);
-inputBirthday.setAttribute("max", dateMaxInput);
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -45,7 +36,6 @@ function exitModal() {
 
 // Control Form
 const controlForm = new Map();
-
 let inputLastName = document.getElementById("last");
 let inputFirstName = document.getElementById("first");
 let inputEmail = document.getElementById("email");
@@ -103,6 +93,17 @@ function checkValueEmail(element) {
     controlForm.set(element.name, element.value);
   }
 }
+// search today date, set min date and max date into form birthday (18-90years)
+let today = new Date();
+let maxDateAdult = new Date();
+maxDateAdult.setYear(today.getFullYear() - 18);
+let minDateAdult = new Date();
+minDateAdult.setYear(today.getFullYear() - 90);
+let dateMinInput = String(minDateAdult.toISOString().split("T")[0]);
+let dateMaxInput = String(maxDateAdult.toISOString().split("T")[0]);
+let inputBirthday = document.getElementById("birthdate");
+inputBirthday.setAttribute("min", dateMinInput);
+inputBirthday.setAttribute("max", dateMaxInput);
 
 function checkDateBirthAdult(element) {
   if (element.value !== "") {
@@ -148,6 +149,7 @@ function checkdataRange(element) {
   }
 }
 
+// set green background and clean attribute data-error
 function dataChecked(element) {
   element.classList.remove("bg-error");
   element.classList.add("bg-checked");
@@ -155,6 +157,7 @@ function dataChecked(element) {
   element.parentElement.removeAttribute("data-error");
 }
 
+//set red background  and set attribute data-error
 function dataError(element) {
   element.parentElement.setAttribute("data-error-visible", "true");
   element.classList.add("bg-error");
@@ -198,11 +201,13 @@ function checkdataLocation(element) {
   }
 }
 
+// Check if all input is validated
 function checkForm(element) {
   let formDiv = document.querySelector("form[name='reserve']").childNodes;
   for (const child of formDiv) {
     if (child.attributes !== undefined) {
       if (child.attributes.class.nodeValue === "formData") {
+        // in form, select only div class=formDATA
         if (
           child.lastElementChild !== undefined &&
           child.lastElementChild.name !== undefined
@@ -251,7 +256,7 @@ function checkForm(element) {
     data += "##";
   }
 }
-
+// if form completed, upgrade btn to submit, send data, and display ::after div modal
 formDiv.addEventListener("submit", function (e) {
   e.preventDefault();
   btnSubmit.value = "Fermer";
