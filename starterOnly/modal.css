@@ -12,7 +12,6 @@
 /* Landing Page */
 
 body {
-  margin: 0;
   display: flex;
   flex-direction: column;
   font-family: var(--font-default);
@@ -38,8 +37,9 @@ img {
   float: left;
 }
 .header-logo img {
+  margin-top: 3px;
   min-width: 150px;
-  max-width: 250px;
+  max-width: 220px;
 }
 .main-navbar {
   float: right;
@@ -125,10 +125,6 @@ main {
   background: #3876ac;
 }
 
-.smFont {
-  font-size: 16px;
-}
-
 .bground {
   display: none;
   position: fixed;
@@ -166,12 +162,12 @@ main {
   display: var(--modal-after-display);
   justify-content: center;
   align-items: center;
-  margin: 50px auto 60px auto;
+  margin: 50px auto 90px auto;
   width: 90%;
+  height: 82%;
   max-width: 500px;
   border-radius: 10px;
   position: absolute;
-  padding: 40px;
   font-size: 36px;
   text-align: center;
   top: 0;
@@ -369,10 +365,7 @@ input[data-error]::after {
   cursor: pointer;
   border: 0;
 }
-.btn-submit:disabled {
-  background: gray;
-  cursor: not-allowed;
-}
+
 /* custom select styles */
 .custom-select {
   position: relative;

@@ -64,23 +64,27 @@
             <div class="formData">
               <label>Prénom</label>
               <input class="text-control" type="text" id="first" name="first" autocomplete="given-name" autofocus
-                required onchange="checkInputText(this)">
+                onchange="checkInputText(this)" required>
             </div>
             <div class="formData">
               <label>Nom</label>
-              <input class="text-control" type="text" id="last" name="last" autocomplete="family-name" required>
+              <input class="text-control" type="text" id="last" name="last" autocomplete="family-name"
+                onchange="checkInputText(this)" required>
             </div>
             <div class="formData">
               <label>E-mail</label>
-              <input class="text-control" type="email" id="email" name="email" autocomplete="email" required>
+              <input class="text-control" type="email" id="email" name="email" autocomplete="email"
+                onchange="checkValueEmail(this)" required>
             </div>
             <div class="formData">
               <label>Date de naissance</label>
-              <input class="text-control" type="date" id="birthdate" name="birthdate" autocomplete="bday" required>
+              <input class="text-control" type="date" id="birthdate" name="birthdate" autocomplete="bday"
+                onchange="checkDateBirthAdult(this)" required>
             </div>
             <div class="formData">
               <label>À combien de tournois GameOn avez-vous déjà participé ?</label>
-              <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99" required>
+              <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99"
+                onchange="checkdataRange(this)" required>
             </div>
             <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
             <div class="formData" onchange="checkdataLocation(this)">
