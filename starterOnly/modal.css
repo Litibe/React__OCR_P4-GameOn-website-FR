@@ -366,6 +366,10 @@ input[data-error]::after {
   border: 0;
 }
 
+.btn-submit-disabled {
+  background: gray;
+}
+
 /* custom select styles */
 .custom-select {
   position: relative;

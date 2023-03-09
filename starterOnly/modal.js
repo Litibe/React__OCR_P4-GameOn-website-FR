@@ -240,7 +240,7 @@ function checkForm(element) {
   }
   // after every function check, check of controlForm Map contains all necessary data to send form
   if (controlForm.size < 7) {
-    element.style.background = "gray";
+    element.classList.add("btn-submit-disabled");
     element.parentElement.setAttribute("data-error-visible", "true");
     element.parentElement.setAttribute(
       "data-error",
@@ -251,7 +251,7 @@ function checkForm(element) {
     // disactivate button to unautorize submit (update propriety type submit => buttom)
     btnSubmit.setAttribute("type", "button");
   } else {
-    element.style.background = "red";
+    element.classList.remove("btn-submit-disabled");
     element.parentElement.removeAttribute("data-error-visible");
     element.parentElement.removeAttribute("data-error");
     // activate button to autorize submit (update propriety type buttom => submit)
