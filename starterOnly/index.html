@@ -18,11 +18,11 @@
 </head>
 
 <body>
-  <div class="topnav" id="myTopnav">
+  <header class="topnav" id="myTopnav">
     <div class="header-logo">
       <img alt="logo" src="Logo.png">
     </div>
-    <div class="main-navbar">
+    <nav class="main-navbar">
       <a href="#" class="active"><span>Accueil</span></a>
       <a href="#"><span>Détails de l'évènement</span></a>
       <a href="#"><span>À propos</span></a>
@@ -31,8 +31,8 @@
       <a href="javascript:void(0);" class="icon" onclick="editNav()">
         <i class="fa fa-bars"></i>
       </a>
-    </div>
-  </div>
+    </nav>
+  </header>
 
   <main>
     <div class="hero-section">
@@ -62,32 +62,33 @@
         <div class="modal-body">
           <form name="reserve" action="index.html" method="get">
             <div class="formData">
-              <label>Prénom</label>
-              <input class="text-control" type="text" id="first" name="first" autocomplete="given-name" autofocus
-                onchange="checkInputText(this)" required>
+              <label for="firstname">Prénom</label>
+              <input class="text-control" type="text" id="firstname" name="firstname" autocomplete="given-name"
+                autofocus onchange="checkInputText(this)" required placeholder="Votre Prénom (ex: John)">
             </div>
             <div class="formData">
-              <label>Nom</label>
-              <input class="text-control" type="text" id="last" name="last" autocomplete="family-name"
-                onchange="checkInputText(this)" required>
+              <label for="lastname">Nom</label>
+              <input class="text-control" type="text" id="lastname" name="lastname" autocomplete="family-name"
+                onchange="checkInputText(this)" required placeholder="Votre Nom (ex: Doe)">
             </div>
             <div class="formData">
-              <label>E-mail</label>
+              <label for="email">E-mail</label>
               <input class="text-control" type="email" id="email" name="email" autocomplete="email"
-                onchange="checkValueEmail(this)" required>
+                onchange="checkValueEmail(this)" required placeholder="Votre mail (ex: adresse@domaine.fr)">
             </div>
             <div class="formData">
-              <label>Date de naissance</label>
+              <label for="birthdate">Date de naissance</label>
               <input class="text-control" type="date" id="birthdate" name="birthdate" autocomplete="bday"
                 onchange="checkDateBirthAdult(this)" required>
             </div>
             <div class="formData">
-              <label>À combien de tournois GameOn avez-vous déjà participé ?</label>
+              <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label>
               <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99"
-                onchange="checkdataRange(this)" required>
+                onchange="checkdataRange(this)" required value="0">
             </div>
-            <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
+
             <div class="formData" onchange="checkdataLocation(this)">
+              <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
               <input class="checkbox-input" type="radio" id="location1" name="location" value="New York">
               <label class="checkbox-label" for="location1">
                 <span class="checkbox-icon"></span>

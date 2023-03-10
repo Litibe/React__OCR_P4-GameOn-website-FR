@@ -216,8 +216,8 @@ function checkForm(element) {
           child.lastElementChild.name !== undefined
         ) {
           if (
-            child.lastElementChild.name === "last" ||
-            child.lastElementChild.name === "first"
+            child.lastElementChild.name === "lastname" ||
+            child.lastElementChild.name === "firstname"
           ) {
             checkInputText(child.lastElementChild);
           } else if (child.lastElementChild.name === "email") {
