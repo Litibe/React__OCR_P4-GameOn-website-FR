@@ -84,11 +84,11 @@
             <div class="formData">
               <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label>
               <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99"
-                onchange="checkdataRange(this)" required value="0">
+                onchange="checkdataRange(this)" required>
             </div>
-
-            <div class="formData" onchange="checkdataLocation(this)">
-              <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
+            <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
+            <div class="formData" onchange="checkdataLocation(this)"
+              aria-label="A quel tournoi souhaitez-vous participer cette année ?">
               <input class="checkbox-input" type="radio" id="location1" name="location" value="New York">
               <label class="checkbox-label" for="location1">
                 <span class="checkbox-icon"></span>
@@ -116,7 +116,8 @@
             </div>
             <div class="formData">
               <input class="checkbox-input" type="checkbox" id="checkbox1" name="contract"
-                onchange="checkBoxContract(this)" required>
+                onchange="checkBoxContract(this)" required
+                aria-label="J'ai lu et accepté les conditions d'utilisation.">
               <label class="checkbox2-label" for="checkbox1">
                 <span class="checkbox-icon"></span>
                 J'ai lu et accepté les conditions d'utilisation.

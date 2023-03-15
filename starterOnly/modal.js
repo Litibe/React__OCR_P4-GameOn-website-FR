@@ -133,13 +133,32 @@ function checkDateBirthAdult(element) {
 // Check input number of round participation
 function checkdataRange(element) {
   // if input is not undefined and only a digit/integer
-  if (element.value < "0" || !/\d$/i.test(element.value)) {
+  if (!/\d$/i.test(element.value)) {
     element.parentElement.setAttribute(
       "data-error",
-      "Vous devez saisir un chiffre"
+      "Vous devez saisir un chiffre svp"
     );
     dataError(element);
     controlForm.delete(element.name);
+  } else if (/\d$/i.test(element.value)) {
+    if (parseInt(element.value) < 0) {
+      element.parentElement.setAttribute(
+        "data-error",
+        "Vous devez saisir un chiffre positif"
+      );
+      dataError(element);
+      controlForm.delete(element.name);
+    } else if (parseInt(element.value) > 99) {
+      element.parentElement.setAttribute(
+        "data-error",
+        "Vous devez saisir un chiffre entre 0 et 99"
+      );
+      dataError(element);
+      controlForm.delete(element.name);
+    } else {
+      dataChecked(element);
+      controlForm.set(element.name, element.value);
+    }
   } else {
     dataChecked(element);
     controlForm.set(element.name, element.value);
@@ -152,6 +171,7 @@ function checkBoxContract(element) {
     element.parentElement.lastElementChild.classList.remove("bg-error");
     element.parentElement.removeAttribute("data-error-visible");
     element.parentElement.removeAttribute("data-error");
+    element.setAttribute("aria-checked", true);
     controlForm.set(element.name, element.checked);
   } else {
     element.parentElement.lastElementChild.classList.add("bg-error");
@@ -160,6 +180,7 @@ function checkBoxContract(element) {
       "Vous devez accepter les conditions d'utilisation."
     );
     element.parentElement.setAttribute("data-error-visible", true);
+    element.setAttribute("aria-checked", false);
     controlForm.delete(element.name);
   }
 }
